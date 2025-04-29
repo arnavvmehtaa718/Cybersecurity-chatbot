@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI Hacker Mode</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000000;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Binary rain animation */
+        .binary-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: black;
+            overflow: hidden;
+        }
+
+        .binary-column {
+            position: absolute;
+            top: -100%;
+            font-size: 20px;
+            color: #00ff00;
+            white-space: nowrap;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -100%;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* Header style for "ANONYMOUS" */
+        .header {
+            font-size: 60px;
+            font-weight: bold;
+            text-align: center;
+            color: #00ff00;
+            text-transform: uppercase;
+            letter-spacing: 7px;
+            animation: pulse 1.5s ease-in-out infinite alternate;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00, 0 0 45px #00ff00;
+        }
+
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+            }
+            100% {
+                text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00;
+            }
+        }
+
+        /* Chat container styling */
+        .chat-container {
+            width: 80%;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            box-shadow: 0 0 40px #00ff00;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0.9;
+        }
+
+        .chat-header {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        .response-box {
+            flex: 1;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            color: #00ff00;
+            font-size: 16px;
+            overflow-y: auto;
+            max-height: 300px;
+            box-shadow: 0 0 10px #00ff00;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .response-box:hover {
+            box-shadow: 0 0 20px #00ff00;
+            transform: scale(1.02);
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: black;
+            color: #00ff00;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        input:focus {
+            background: #222222;
+            outline: none;
+        }
+
+        button {
+            padding: 15px 20px;
+            background: #00ff00;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #00cc00;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .header {
+                font-size: 48px;
+            }
+
+            .chat-header {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Binary background -->
+    <div class="binary-background" id="binaryBackground"></div>
+
+    <!-- Header for ANONYMOUS -->
+    <div class="header">ANONYMOUS</div>
+
+    <!-- Chat container -->
+    <div class="chat-container">
+        <div class="chat-header">Ask CYBERSECURITY CHATBOT</div>
+        <div id="response" class="response-box">Welcome! Type your question below to get started.</div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Type your question...">
+            <button onclick="askGemini()">Ask</button>
+        </div>
+    </div>
+
+    <script>
+        // Generate binary rain effect
+        const binaryBackground = document.getElementById('binaryBackground');
+        const binaryCharacters = '01';
+
+        function createBinaryColumn() {
+            const binaryColumn = document.createElement('div');
+            binaryColumn.classList.add('binary-column');
+            binaryColumn.style.left = Math.random() * 100 + 'vw';
+            binaryColumn.style.animationDuration = Math.random() * 3 + 3 + 's';
+
+            // Generate a column of binary characters
+            let columnContent = '';
+            for (let i = 0; i < 20; i++) {
+                columnContent += binaryCharacters[Math.floor(Math.random() * binaryCharacters.length)] + '<br>';
+            }
+            binaryColumn.innerHTML = columnContent;
+
+            binaryBackground.appendChild(binaryColumn);
+
+            setTimeout(() => {
+                binaryColumn.remove();
+            }, 5000);
+        }
+
+        setInterval(createBinaryColumn, 200);
+
+        // Ask Gemini AI function
+        async function askGemini() {
+            const apiKey = "API KEY";
+            const userInput = document.getElementById("userInput").value;
+            const responseDiv = document.getElementById("response");
+
+            if (!userInput) {
+                responseDiv.innerHTML = "<b style='color:red;'>Please enter a question!</b>";
+                return;
+            }
+
+            responseDiv.innerHTML = "Thinking... ⏳";
+
+            try {
+                const res = await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + apiKey, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ role: "user", parts: [{ text: userInput }] }]
+                    })
+                });
+
+                const data = await res.json();
+                if (data.candidates && data.candidates.length > 0) {
+                    responseDiv.innerHTML = `<b>Response:</b> ${data.candidates[0].content.parts[0].text}`;
+                } else {
+                    responseDiv.innerHTML = "<b style='color:red;'>No response from AI.</b>";
+                }
+            } catch (error) {
+                responseDiv.innerHTML = "<b style='color:red;'>Error fetching response.</b>";
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</body>
+</html>
